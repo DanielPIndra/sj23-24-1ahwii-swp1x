@@ -1,33 +1,27 @@
-const line = document.querySelector(".expandable-headlines");
-const body = document.querySelector("body");
-const main = document.querySelector("main");
-const group = document.querySelector(".theme-group-name");
-const elems = [line, body, main, group];
-elems.forEach((e) => {
-    console.log(e);
-    // @ts-ignore
-    console.log(e.offsetWidth);
-});
-
-const headings = document.querySelectorAll(".expandable-headlines li");
-headings.forEach((h) => {
-    h.addEventListener("click", (e) => toggleText(e.target));
-});
-
-function toggleText(target) {
-    console.log("clicked, target:");
-    console.log(target);
-    if (target.isShowingMore) {
-        // target.style.whiteSpace = "nowrap";
-        target.style.overflow = "hidden";
-        // target.style.textOverflow = "ellipsis";
-        target.style.height = "1.2em";
-        target.isShowingMore = false;
+function toggleVisibility(e) {
+    // console.log(e);
+    window.t = e.target;
+    parent = e.target.parentElement;
+    kids = parent.children;
+    h = kids[0];
+    h.clicked = !h.clicked;
+    if (h.clicked) {
+        for (let i = 1; i < kids.length; i++) {
+            kids[i].style.visibility = "visible";
+            kids[i].style.position = "static";
+        }
+        parent.style.backgroundColor = "white";
+        parent.style.color = "black";
     } else {
-        // target.style.whiteSpace = "normal";
-        target.style.overflow = "visible";
-        // target.style.textOverflow = "clip";
-        target.style.height = "auto";
-        target.isShowingMore = true;
+        for (let i = 1; i < kids.length; i++) {
+            kids[i].style.visibility = "hidden";
+            kids[i].style.position = "absolute";
+        }
+        parent.style.backgroundColor = "";
+        parent.style.color = "";
     }
+    // const pars = e.target.ch;
 }
+const articles = document.querySelectorAll("div.news-articles > article > h2");
+// console.log(articles);
+articles.forEach((a) => a.addEventListener("click", toggleVisibility));
